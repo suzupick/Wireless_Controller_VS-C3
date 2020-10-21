@@ -6,7 +6,7 @@ https://github.com/simondlevy/PS2X_lib
 ## 配線
 動作チェック用サンプルプログラムでの配線は下記の通り。
 
-図を挿入
+![wiring](https://github.com/suzupick/Wireless_Controller_VS-C3/blob/master/wiring.png)
 
 VS-C3のピンアサイン
 | Pin | 役割 | 
