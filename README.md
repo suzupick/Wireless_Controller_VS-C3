@@ -1,9 +1,12 @@
-# セットアップ
-## PS2X_libのインストール
+# Wireless_Controller_VS-C3
+ヴイストン社のゲームパッドVS-C3をArduinoで使うためのプログラムです。
+
+## セットアップ
+### PS2X_libのインストール
 PS2コントローラー通信用ライブラリPS2X_libをArduinoのライブラリフォルダにダウンロードする。
 https://github.com/simondlevy/PS2X_lib
 
-## 配線
+### 配線
 図の通り配線する。
 
 ![wiring](https://github.com/suzupick/Wireless_Controller_VS-C3/blob/master/wiring.png)
@@ -30,13 +33,13 @@ PS2コントローラーのCLOCK, COMMAND, ATTENTION, DATAとの対応は
 - CLK → CLOCK
 - CMD → COMMAND
 
-# コントローラーの動作チェック
+## コントローラーの動作チェック
 1. VS-C3_test.inoを書き込む
 1. コントローラーとレシーバーをペアリングする(ペアリング方法は説明書参照)。ペアリングできるとシリアルモニタに表示される。
 1. コントローラーのボタンを押し、シリアルモニタに表示されることを確認する。
 1. L1押下中にアナログスティックの入力値が表示されることを確認する。
 
-# 参考
+## 参考
 
 参考にしたブログ：
 https://nakkye.at.webry.info/201411/article_1.html
