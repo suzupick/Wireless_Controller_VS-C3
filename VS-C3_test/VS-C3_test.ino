@@ -18,7 +18,7 @@
 
 #include <PS2X_lib.h>
 
-// コントローラーのクラスを作成
+// インスタンスを生成
 PS2X ps2x;
 
 int error = 0; // エラー値の変数
