@@ -17,13 +17,14 @@ void setup() {
 }
 
 void loop() {
-    Wire.requestFrom(8, 20);// request 20 bytes from Slave ID #8
-    
+    // コントローラーの状態をgamepad_stateに取得。
+    Wire.requestFrom(0x40, 20); // request 20 bytes from Slave ID 0x40
     while (Wire.available() < 20);
     for(int i=0;i<20;i++){
         gamepad_state[i] = Wire.read();
     }
 
+    // デバッグ用
     for(int i=0;i<20;i++){
         Serial.print(gamepad_state[i]);
         if(i==19){

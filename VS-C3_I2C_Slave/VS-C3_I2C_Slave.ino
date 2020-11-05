@@ -11,7 +11,7 @@
 
 void requestEvent(); // プロトタイプ宣言
 
-PS2X ps2x; // コントローラーのクラスを作成
+PS2X ps2x; // PS2Xクラスのインスタンスを生成
 int error = 0; // エラー値の変数
 byte vibrate = 0; // 振動機能のON/OFF?　あんまり調べていない
 byte gamepad_state[20] = {}; // コントローラのボタン押下状態
@@ -33,9 +33,8 @@ void setup() {
         Serial.println("error3: Controller refusing to enter Pressures mode, may not support it. ");
     }
     
-    // Serial.print(ps2x.Analog(1), HEX);
     Serial.println("PS-C2 Controller Found OK! ");
-    Wire.begin(8);// Slave ID #8
+    Wire.begin(0x40);// Slave ID 0x40
     Wire.onRequest(requestEvent);
 }
 
@@ -44,7 +43,8 @@ void loop() {
 
 void requestEvent() {
     ps2x.read_gamepad(false, vibrate); //ゲームパッド・ボタンの読み込み
-    
+
+    // gamepad_stateにボタン押下状態を格納   
     gamepad_state[0] = ps2x.Button(PSB_START);
     gamepad_state[1] = ps2x.Button(PSB_SELECT);
     gamepad_state[2] = ps2x.Button(PSB_PAD_UP);
@@ -66,7 +66,7 @@ void requestEvent() {
     gamepad_state[18] = ps2x.Analog(PSS_RX);
     gamepad_state[19] = ps2x.Analog(PSS_RY);
 
-    Wire.write(gamepad_state, 20); 
+    Wire.write(gamepad_state, 20); // マスターにデータ送信
     
     // デバッグ用
     if (ps2x.Button(PSB_START)) Serial.println("Start");
