@@ -11,7 +11,7 @@
 
 void requestEvent(); // プロトタイプ宣言
 
-PS2X ps2x; // コントローラーのクラスを作成
+PS2X ps2x; // PS2Xクラスのインスタンスを生成
 int error = 0; // エラー値の変数
 byte vibrate = 0; // 振動機能のON/OFF?　あんまり調べていない
 byte gamepad_state[20] = {0}; // コントローラのボタン押下状態　ゼロで初期化
@@ -46,6 +46,7 @@ void loop() {
 void requestEvent() {
     ps2x.read_gamepad(false, vibrate); //ゲームパッド・ボタンの読み込み
 
+    // gamepad_stateにボタン押下状態を格納   
     gamepad_state[0] = ps2x.Button(PSB_START);
     gamepad_state[1] = ps2x.Button(PSB_SELECT);
     gamepad_state[2] = ps2x.Button(PSB_PAD_UP);

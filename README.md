@@ -9,11 +9,12 @@ https://github.com/simondlevy/PS2X_lib
 ### 配線
 図の通り配線する。
 
-![wiring](https://github.com/suzupick/Wireless_Controller_VS-C3/blob/master/wiring.png)
+![wiring](wiring.png)
 
 VS-C3のピンアサイン
-| Pin | 役割 | 
-| --- | ---- | 
+
+| Pin | 役割 |
+| :--- | :--- | 
 | 1   | 3.3V | 
 | 2   | NC   | 
 | 3   | SEL  | 
