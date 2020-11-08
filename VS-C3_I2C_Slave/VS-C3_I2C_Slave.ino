@@ -14,7 +14,8 @@ void requestEvent(); // プロトタイプ宣言
 PS2X ps2x; // コントローラーのクラスを作成
 int error = 0; // エラー値の変数
 byte vibrate = 0; // 振動機能のON/OFF?　あんまり調べていない
-byte gamepad_state[20] = {}; // コントローラのボタン押下状態
+byte gamepad_state[20] = {0}; // コントローラのボタン押下状態　ゼロで初期化
+byte gamepad_state_cmp[6] = {0}; // コントローラのボタン押下状態(圧縮版)　ゼロで初期化
 
 void setup() {
     Serial.begin(57600);
@@ -24,17 +25,17 @@ void setup() {
     error = ps2x.config_gamepad(13, 11, 10, 12, true, true);
     
     if (error == 0) {
-        Serial.println("Found Controller, configured successful");
+        Serial.println("Controller found, configured successful.");
     } else if (error == 1) {
-        Serial.println("error1: No controller found, check wiring, see readme.txt to enable debug. ");
+        Serial.println("error1: No controller found, check wiring.");
     } else if (error == 2) {
-        Serial.println("error2: Controller found but not accepting commands. see readme.txt to enable debug. ");
+        Serial.println("error2: Controller found but not accepting commands.");
     } else if (error == 3) {
-        Serial.println("error3: Controller refusing to enter Pressures mode, may not support it. ");
+        Serial.println("error3: Controller refusing to enter Pressures mode, may not support it.");
     }
     
     // Serial.print(ps2x.Analog(1), HEX);
-    Serial.println("PS-C2 Controller Found OK! ");
+    Serial.println("Controller found! OK!");
     Wire.begin(8);// Slave ID #8
     Wire.onRequest(requestEvent);
 }
@@ -44,7 +45,7 @@ void loop() {
 
 void requestEvent() {
     ps2x.read_gamepad(false, vibrate); //ゲームパッド・ボタンの読み込み
-    
+
     gamepad_state[0] = ps2x.Button(PSB_START);
     gamepad_state[1] = ps2x.Button(PSB_SELECT);
     gamepad_state[2] = ps2x.Button(PSB_PAD_UP);
@@ -66,7 +67,20 @@ void requestEvent() {
     gamepad_state[18] = ps2x.Analog(PSS_RX);
     gamepad_state[19] = ps2x.Analog(PSS_RY);
 
-    Wire.write(gamepad_state, 20); 
+    // 20バイト→6バイトに圧縮
+    gamepad_state_cmp[0] = 0;
+    gamepad_state_cmp[1] = 0;
+    for (int i=0; i<8; i++){
+        gamepad_state_cmp[0] += (gamepad_state[i] << i); // 1バイト目のiビット目に格納
+        gamepad_state_cmp[1] += (gamepad_state[8 + i] << i); // 2バイト目のiビット目に格納
+    }
+
+    for (int i=0; i<4; i++){
+        gamepad_state_cmp[i + 2] = gamepad_state[16 + i]; // ジョイスティックの情報をi+2 バイト目に格納
+    }
+
+//    Wire.write(gamepad_state, 20); 
+    Wire.write(gamepad_state_cmp, 6);
     
     // デバッグ用
     if (ps2x.Button(PSB_START)) Serial.println("Start");
