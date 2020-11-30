@@ -28,7 +28,7 @@ void setup() {
     Serial.begin(57600);
     
     // ピンのセットアップ、PrressuresとRumble(?)の設定。返り値でエラー判定
-    error = ps2x.config_gamepad(13, 11, 10, 12, true, true);
+    error = ps2x.config_gamepad(7, 2, 8, 4, true, true);
     
     if (error == 0) {
         Serial.println("Found Controller, configured successful");
