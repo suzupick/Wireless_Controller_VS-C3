@@ -21,8 +21,8 @@ void setup() {
     Serial.begin(57600);
     Serial.println("slave:");
     
-    // ピンのセットアップ、PrressuresとRumble(?)の設定。返り値でエラー判定
-    error = ps2x.config_gamepad(13, 11, 10, 12, true, true);
+    // ピンのセットアップ、PressuresとRumble(?)の設定。返り値でエラー判定
+    error = ps2x.config_gamepad(7, 2, 8, 4, false, false);
     
     if (error == 0) {
         Serial.println("Controller found, configured successful.");
@@ -35,7 +35,7 @@ void setup() {
     }
     
     // Serial.print(ps2x.Analog(1), HEX);
-    Serial.println("Controller found! OK!");
+    // Serial.println("Controller found! OK!");
     Wire.begin(8);// Slave ID #8
     Wire.onRequest(requestEvent);
 }
@@ -83,30 +83,30 @@ void requestEvent() {
 //    Wire.write(gamepad_state, 20); 
     Wire.write(gamepad_state_cmp, 6);
     
-    // デバッグ用
-    if (ps2x.Button(PSB_START)) Serial.println("Start");
-    if (ps2x.Button(PSB_SELECT)) Serial.println("Select");
-    if (ps2x.Button(PSB_PAD_UP)) Serial.println("U");
-    if (ps2x.Button(PSB_PAD_RIGHT)) Serial.println("R");
-    if (ps2x.Button(PSB_PAD_LEFT)) Serial.println("L");
-    if (ps2x.Button(PSB_PAD_DOWN)) Serial.println("D");
-    if (ps2x.Button(PSB_GREEN)) Serial.println("GREEN");
-    if (ps2x.Button(PSB_RED)) Serial.println("RED");
-    if (ps2x.Button(PSB_PINK)) Serial.println("PINK");
-    if (ps2x.Button(PSB_BLUE)) Serial.println("BLUE");
-    if (ps2x.Button(PSB_L3)) Serial.println("L3");
-    if (ps2x.Button(PSB_R3)) Serial.println("R3");
-    if (ps2x.Button(PSB_L2)) Serial.println("L2");
-    if (ps2x.Button(PSB_R2)) Serial.println("R2");
-    if (ps2x.Button(PSB_R1)) Serial.println("R1");
-    if (ps2x.Button(PSB_L1)) {
-        // L1を押している間、アナログスティックの入力を表示
-        Serial.print(ps2x.Analog(PSS_LY), DEC);
-        Serial.print(",");
-        Serial.print(ps2x.Analog(PSS_LX), DEC);
-        Serial.print(",");
-        Serial.print(ps2x.Analog(PSS_RY), DEC);
-        Serial.print(",");
-        Serial.println(ps2x.Analog(PSS_RX), DEC);
-    }
+//    // デバッグ用
+//    if (ps2x.Button(PSB_START)) Serial.println("Start");
+//    if (ps2x.Button(PSB_SELECT)) Serial.println("Select");
+//    if (ps2x.Button(PSB_PAD_UP)) Serial.println("U");
+//    if (ps2x.Button(PSB_PAD_RIGHT)) Serial.println("R");
+//    if (ps2x.Button(PSB_PAD_LEFT)) Serial.println("L");
+//    if (ps2x.Button(PSB_PAD_DOWN)) Serial.println("D");
+//    if (ps2x.Button(PSB_GREEN)) Serial.println("GREEN");
+//    if (ps2x.Button(PSB_RED)) Serial.println("RED");
+//    if (ps2x.Button(PSB_PINK)) Serial.println("PINK");
+//    if (ps2x.Button(PSB_BLUE)) Serial.println("BLUE");
+//    if (ps2x.Button(PSB_L3)) Serial.println("L3");
+//    if (ps2x.Button(PSB_R3)) Serial.println("R3");
+//    if (ps2x.Button(PSB_L2)) Serial.println("L2");
+//    if (ps2x.Button(PSB_R2)) Serial.println("R2");
+//    if (ps2x.Button(PSB_R1)) Serial.println("R1");
+//    if (ps2x.Button(PSB_L1)) {
+//        // L1を押している間、アナログスティックの入力を表示
+//        Serial.print(ps2x.Analog(PSS_LY), DEC);
+//        Serial.print(",");
+//        Serial.print(ps2x.Analog(PSS_LX), DEC);
+//        Serial.print(",");
+//        Serial.print(ps2x.Analog(PSS_RY), DEC);
+//        Serial.print(",");
+//        Serial.println(ps2x.Analog(PSS_RX), DEC);
+//    }
 }
