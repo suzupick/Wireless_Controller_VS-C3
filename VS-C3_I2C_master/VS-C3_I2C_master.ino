@@ -1,21 +1,15 @@
-/*
- * 無線コントローラーVS-C3のArduino用I2Cマスター
- * 2020.11.05
- * 
- * 参考にしたブログ
- * https://qiita.com/hikoalpha/items/7bf563ee286a59bfd2f4
- */
-
 #include <Wire.h>
+#include "motorDrv.hpp"
 
 byte gamepad_state[20] = {0};
 byte gamepad_state_cmp[6] = {0};
 
-
 void setup() {
   Wire.begin();
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.println("master:");
+
+  MD_Init();
 }
 
 void loop() {
@@ -50,21 +44,11 @@ void loop() {
         }
     }
 
-
-// 20バイト通信版
-//    Wire.requestFrom(8, 20);// request 20 bytes from Slave ID 8
-//    
-//    while (Wire.available() < 20);
-//    for(int i=0;i<20;i++){
-//        gamepad_state[i] = Wire.read();
-//    }
-//
-//    for(int i=0;i<20;i++){
-//        Serial.print(gamepad_state[i]);
-//        if(i==19){
-//            Serial.println("");
-//        } else {
-//            Serial.print(",");
-//        }
-//    }
+    if(gamepad_state[7] == 1){
+        MD_SetMotorState(ENUM_MOTOR_SEL_LEFT, ENUM_MOTOR_DIR_CW, 255);
+        MD_SetMotorState(ENUM_MOTOR_SEL_RIGHT, ENUM_MOTOR_DIR_CW, 255);  
+    } else {
+        MD_SetMotorState(ENUM_MOTOR_SEL_LEFT, ENUM_MOTOR_DIR_CW, 0);
+        MD_SetMotorState(ENUM_MOTOR_SEL_RIGHT, ENUM_MOTOR_DIR_CW, 0);  
+    }
 }
