@@ -14,7 +14,7 @@
 /**************************************************
  * Prototype
  *************************************************/
-// void VSC3_Init(void);
-// void VSC3_GetState(int& return_value);
+void VSC3_Init(void);
+uint8_t VSC3_GetState(void);
 
 #endif
